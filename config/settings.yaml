@@ -1,0 +1,16 @@
+# Configurations
+
+logging:
+  formatter:
+    format: '%(asctime)s - %(message)s'
+    time_format: '%Y-%m-%d %H:%M:%S'
+  level: INFO
+
+volumes:
+  external: /data/external/
+  interim: /data/interim/
+  logs: /data/logs/
+  models: /data/models/
+  processed: /data/processed/
+  raw: /data/raw/
+  reports: /reports/
