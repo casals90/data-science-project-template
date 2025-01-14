@@ -25,7 +25,6 @@ RUN $POETRY_HOME/bin/poetry config virtualenvs.create false
 WORKDIR /app
 
 # Copy Poetry configuration files
-# COPY config/pyproject.toml config/poetry.lock* /app/config
 COPY ./config/pyproject.toml ./config/poetry.lock* /app/
 
 RUN echo ls -l /
