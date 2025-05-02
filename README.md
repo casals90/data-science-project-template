@@ -27,8 +27,6 @@ Project Organization
     ├── src
     │   ├── data
     │   │
-    │   ├── features
-    │   │
     │   ├── models
     │   │
     │   └── tools  
