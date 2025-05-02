@@ -1,63 +1,8 @@
 import importlib
-import os
 from datetime import timedelta
-from typing import List, Dict
+from typing import List
 
-import nltk
-import pandas as pd
-from nltk.langnames import langname
-
-from src.tools.startup import logger, settings
-
-
-def get_lang_name_from_lang_code(lang_code: str) -> str:
-    """
-    Given a language code, this function gets the corresponding language name.
-
-    Args:
-        lang_code (str): the lang code to get the language name.
-
-    Returns:
-        (str): the language name.
-    """
-    return langname(lang_code)
-
-
-def get_stopwords(languages: List[str]) -> Dict[str, List[str]]:
-    """
-    Given a list of language codes, this function try to download the
-    stopwords from 'nltk' package. If the language does not exist in 'nltk'
-    package, it tries to read from disk.
-
-    Args:
-        languages (List[str]): a list of language to load the stopwords.
-
-    Notes:
-        I manually downloaded the stopwords of Estonian language.
-        Source: https://github.com/kristel-/estonian-stopwords
-
-    Returns:
-        (Dict[List[str]]): a list of dicts where the key is the language and
-        the value the list of stop words.
-    """
-    stop_words = {}
-    for lang in languages:
-        lang_name = get_lang_name_from_lang_code(lang).lower()
-        try:
-            stop_words[lang] = nltk.corpus.stopwords.words(lang_name)
-        except Exception as e:
-            logger.warning(f'Error when downloading stopwords '
-                           f'for language {lang}: {e}.')
-
-            file_path = os.path.join(
-                settings['volumes']['raw'], settings['stop_words'][lang])
-            logger.info(f'Loading {lang} stop words from local '
-                        f'file {file_path}')
-
-            content = read_file(file_path, encoding='utf8', mode='r')
-            stop_words[lang] = content.split('\n')
-
-    return stop_words
+from src.tools.startup import logger
 
 
 def read_file(file_path: str, **kwargs) -> str:

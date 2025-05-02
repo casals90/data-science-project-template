@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict
 
 import numpy as np
 from sklearn.utils import class_weight as sk_learn_class_weight
@@ -23,28 +23,3 @@ def compute_class_weight(
         class_weight=class_weight, classes=classes, y=y_train)
 
     return {c: w for c, w in zip(classes, class_weight)}
-
-
-def model_step(model, batch, device) -> Tuple:
-    """
-    Given a model, batch and device, this function pass to the model the
-    batch items in order to get the loss value and the 'logits' of the model.
-
-    Args:
-        model: the pretrained model to generate the outputs
-        batch: a dict with batch items to use
-        device: the device where the model is located
-
-    Returns:
-        (Tuple): the loss and the 'logits' of the model output.
-    """
-    # Send inputs to device
-    for in_key in batch:
-        batch[in_key] = batch[in_key].to(device)
-
-    # Clear previously calculated gradients.
-    model.zero_grad()
-    # Run the model
-    outputs = model(**batch)
-
-    return outputs['loss'], outputs['logits']

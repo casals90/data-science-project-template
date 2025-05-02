@@ -1,9 +1,8 @@
-from typing import Tuple, List, Optional
+from typing import Tuple, Optional
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from wordcloud import WordCloud
 
 from src.tools.startup import logger
 
@@ -117,21 +116,3 @@ def generate_heat_map(
     plt.figure(figsize=fig_size)
     heatmap = sns.heatmap(corr_df, vmin=-1, vmax=1, annot=True, cmap=color_map)
     heatmap.set_title(title, fontdict={'fontsize': 18}, pad=16)
-
-
-def generate_word_cloud(corpus: List[str], title: str) -> None:
-    """
-    Given a list of texts, this function generates the WordCloud plot.
-
-    Args:
-        corpus (List[str]): the text corpus to generate the wordcloud.
-        title (str): plot's title.
-    """
-    freq_dict = pd.Series(corpus).value_counts().to_dict()
-    wordcloud = WordCloud().generate_from_frequencies(freq_dict)
-
-    plt.subplots(figsize=(20, 12))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    plt.title(title, fontsize=32)
-    plt.show()
