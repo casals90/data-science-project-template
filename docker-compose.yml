@@ -2,18 +2,13 @@
 services:
   jupyter:
     container_name: jupyter
-    image: jupyter-environment
     build:
       context: ./
       dockerfile: Dockerfile
     restart: always
     user: root
-    environment:
-      - NB_UID=${UID}
-      - NB_GID=${GID}
-      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
-      - JUPYTER_ENABLE_LAB=${JUPYTER_ENABLE_LAB}
-      - GRANT_SUDO=${GRANT_SUDO}
+    env_file:
+      - .env
     volumes:
       - ./data/interim:/data/interim
       - ./data/logs:/data/logs
